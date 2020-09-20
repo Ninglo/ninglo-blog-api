@@ -5,15 +5,9 @@ const fs = require('fs')
 const rootPath = require('app-root-path').path
 const blogPath = `${rootPath}/blogs`
 
-router.get('/blogText', (req, res) => {
-    res.send('233')
-})
-
 router.get('/blogText/:id', async (req, res, next) => {
-    console.log('A req')
     let id = req.params.id
     if (id == -1) {
-        console.log(111)
         let fileArray = []
         const files = await fs.readdirSync(blogPath)
         for (let i=0; i < files.length; i++) {
@@ -38,9 +32,7 @@ router.get('/blogText/:id', async (req, res, next) => {
 })
 
 router.post('/blogText', async (req, res) => {
-    console.log('A req')
     let body = req.body
-    console.log(typeof body)
     const id = await fs.readdirSync(blogPath).length
     fs.appendFileSync(`${blogPath}/${id}.md`, body.mdText)
     res.send('Receive body!')
